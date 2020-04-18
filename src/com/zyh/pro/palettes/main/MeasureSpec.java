@@ -6,9 +6,9 @@ public class MeasureSpec {
 
 	static final int WRAP_CONTENT = -2;
 
-	private final View.Params params;
+	private final View.ViewParams params;
 
-	MeasureSpec(View.Params params) {
+	MeasureSpec(View.ViewParams params) {
 		this.params = params;
 	}
 
@@ -33,6 +33,6 @@ public class MeasureSpec {
 	}
 
 	private int allMarginSize() {
-		return params.marginParam * 2;
+		return params.getMargin() * 2;
 	}
 }

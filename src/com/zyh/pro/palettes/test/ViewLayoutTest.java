@@ -185,8 +185,8 @@ public class ViewLayoutTest {
 
 	private HashMap<String, String> getAttributes(String width, String height) {
 		HashMap<String, String> childAttributes = new HashMap<>();
-		childAttributes.put("width", width);
-		childAttributes.put("height", height);
+		childAttributes.put("widthSpec", width);
+		childAttributes.put("heightSpec", height);
 		return childAttributes;
 	}
 

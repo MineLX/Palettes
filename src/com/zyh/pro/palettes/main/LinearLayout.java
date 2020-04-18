@@ -22,7 +22,7 @@ public class LinearLayout extends ViewGroup {
 	protected void measureHeight(int remainderHeight) {
 		super.measureHeight(remainderHeight);
 
-		new LinearLayoutMeasure(this, params.heightSpecParam, view -> view::measureHeight,
+		new LinearLayoutMeasure(this, getParams().getHeightSpec(), view -> view::measureHeight,
 				View::getBoundHeight, this::setHeight, this::getHeight).measure(remainderHeight);
 	}
 
@@ -30,7 +30,7 @@ public class LinearLayout extends ViewGroup {
 	protected void measureWidth(int remainderWidth) {
 		super.measureWidth(remainderWidth);
 
-		new LinearLayoutMeasure(this, params.widthSpecParam, view -> view::measureWidth,
+		new LinearLayoutMeasure(this, getParams().getWidthSpec(), view -> view::measureWidth,
 				View::getBoundWidth, this::setWidth, this::getWidth).measure(remainderWidth);
 	}
 

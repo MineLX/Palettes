@@ -50,7 +50,7 @@ public class LinearLayoutMeasure {
 			measureChildWith(remainder, child);
 
 		int newSize = layout.getChildren().stream().mapToInt(boundSizeGetter).reduce(0, Integer::sum);
-		int result = Math.min(newSize, remainder) - (layout.params.marginParam * 2);
+		int result = Math.min(newSize, remainder) - (layout.getParams().getMargin() * 2);
 
 		sizeSetter.accept(result);
 	}
