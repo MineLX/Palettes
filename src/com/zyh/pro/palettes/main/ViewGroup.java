@@ -2,12 +2,15 @@ package com.zyh.pro.palettes.main;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ViewGroup extends View {
 
 	private final List<View> children;
 
-	public ViewGroup() {
+	public ViewGroup(Map<String, String> map) {
+		super(map);
+
 		children = new ArrayList<>();
 	}
 
@@ -18,14 +21,14 @@ public class ViewGroup extends View {
 			child.onDraw(palette);
 	}
 
-	protected void onSelfDraw(IPalette palette) {
-	}
-
 	public void addChild(View child) {
 		children.add(child);
 	}
 
-	public void setLayout(LinearLayout layout) {
+	protected List<View> getChildren() {
+		return children;
+	}
 
+	protected void onSelfDraw(IPalette palette) {
 	}
 }

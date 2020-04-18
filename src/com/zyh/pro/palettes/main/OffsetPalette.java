@@ -10,7 +10,7 @@ public class OffsetPalette extends DecoratedPalette {
 
 	@Override
 	public void clear(int value) {
-		decorated.fillRect(view.x, view.y, view.width, view.height, value);
+		decorated.fillRect(view.x, view.y, view.getWidth(), view.getHeight(), value);
 	}
 
 	@Override

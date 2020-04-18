@@ -1,11 +1,9 @@
 package com.zyh.pro.palettes.main;
 
-import com.zyh.pro.animator.main.animators.Animator;
-import com.zyh.pro.animator.main.animators.CompositeAnimatorBuilder;
-import com.zyh.pro.animator.main.animators.GetterAnimatorBuilder;
-import com.zyh.pro.animator.main.animators.ToggleAnimatorBuilder;
+import com.zyh.pro.animator.main.animators.*;
+import com.zyh.pro.animator.main.animators.valueanimator.ValueAnimatorBuilder;
 
-public class BallRole extends Role {
+public class BallRole extends Role { // FIXME 2020/4/17  wait for me!!!   duplicated on RhythmBallRole
 
 	private static final int START_RADIUS = 100;
 
@@ -18,15 +16,26 @@ public class BallRole extends Role {
 	public BallRole(Context context) {
 		ball = new Oval(context.width / 2, context.height / 2, START_RADIUS, START_RADIUS);
 
-		animator = new ToggleAnimatorBuilder().addToggle( // FIXME 2020/4/11  wait for me!!!  getter for toggle operation
-				new CompositeAnimatorBuilder()
-						.with(new GetterAnimatorBuilder<>(this::cloneCurrentBall, this::createEnd, new Oval.OvalEvaluator())
-								.addUpdater(oval -> ball = oval)
-								.setDuration(150))
-						.after(new GetterAnimatorBuilder<>(this::cloneCurrentBall, this::createStart, new Oval.OvalEvaluator())
-								.addUpdater(oval -> ball = oval)
-								.setDuration(300))
-		).build();
+		animator = new ToggleAnimatorBuilder()
+				.addToggle(new RepeatableAnimator(() ->
+						new CompositeAnimatorBuilder()
+								.with(getStartAnimator())
+								.after(getEndAnimator())
+								.build()))
+				.build();
+	}
+
+
+	private DurationAnimatorBuilder getStartAnimator() {
+		return new ValueAnimatorBuilder()
+				.setDuration(150)
+				.getterOrder(new Oval.OvalEvaluator(), this::cloneCurrentBall, this::createEnd, oval -> ball = oval);
+	}
+
+	private DurationAnimatorBuilder getEndAnimator() {
+		return new ValueAnimatorBuilder()
+				.setDuration(300)
+				.getterOrder(new Oval.OvalEvaluator(), this::cloneCurrentBall, this::createStart, oval -> ball = oval);
 	}
 
 	@Override
