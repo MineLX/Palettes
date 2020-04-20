@@ -5,6 +5,7 @@ import com.zyh.pro.animator.main.animators.valueanimator.ValueAnimatorBuilder;
 import com.zyh.pro.animator.main.animators.valueanimator.loopmodes.LoopMode;
 import com.zyh.pro.palettes.main.core.Context;
 import com.zyh.pro.palettes.main.core.IPalette;
+import com.zyh.pro.palettes.main.core.IPalettesTarget;
 import com.zyh.pro.palettes.main.shapebean.Oval;
 
 public class TestRole extends Role {
@@ -19,6 +20,17 @@ public class TestRole extends Role {
 				.objectOrder(new Oval.OvalEvaluator(), getStart(context.width, context.height), getEnd(context.width, context.height), this::setOval)
 				.build();
 		context.addCleanUp(animator::stop);
+		animator.start();
+	}
+
+	public TestRole(IPalettesTarget target) {
+		oval = getStart(target.getWidth(), target.getHeight());
+
+		ValueAnimator animator = new ValueAnimatorBuilder()
+				.setLoopMode(LoopMode.infinity_reversed())
+				.objectOrder(new Oval.OvalEvaluator(), getStart(target.getWidth(), target.getHeight()), getEnd(target.getWidth(), target.getHeight()), this::setOval)
+				.build();
+		target.addShutdownCleanUp(animator::stop);
 		animator.start();
 	}
 

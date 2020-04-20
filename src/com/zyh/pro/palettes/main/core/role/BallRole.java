@@ -2,8 +2,8 @@ package com.zyh.pro.palettes.main.core.role;
 
 import com.zyh.pro.animator.main.animators.*;
 import com.zyh.pro.animator.main.animators.valueanimator.ValueAnimatorBuilder;
-import com.zyh.pro.palettes.main.core.Context;
 import com.zyh.pro.palettes.main.core.IPalette;
+import com.zyh.pro.palettes.main.core.IPalettesTarget;
 import com.zyh.pro.palettes.main.shapebean.Oval;
 
 public class BallRole extends Role { // FIXME 2020/4/17  wait for me!!!   duplicated on RhythmBallRole
@@ -16,8 +16,8 @@ public class BallRole extends Role { // FIXME 2020/4/17  wait for me!!!   duplic
 
 	private Oval ball;
 
-	public BallRole(Context context) {
-		ball = new Oval(context.width / 2, context.height / 2, START_RADIUS, START_RADIUS);
+	public BallRole(IPalettesTarget target) {
+		ball = new Oval(target.getWidth() / 2, target.getHeight() / 2, START_RADIUS, START_RADIUS);
 
 		animator = new ToggleAnimatorBuilder()
 				.addToggle(new RepeatableAnimator(() ->

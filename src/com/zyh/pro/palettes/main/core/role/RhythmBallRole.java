@@ -2,8 +2,8 @@ package com.zyh.pro.palettes.main.core.role;
 
 import com.zyh.pro.animator.main.animators.*;
 import com.zyh.pro.animator.main.animators.valueanimator.ValueAnimatorBuilder;
+import com.zyh.pro.palettes.main.core.IPalettesTarget;
 import com.zyh.pro.palettes.main.rhythms.Chain;
-import com.zyh.pro.palettes.main.core.Context;
 import com.zyh.pro.palettes.main.core.IPalette;
 import com.zyh.pro.palettes.main.rhythms.Rhythm;
 import com.zyh.pro.palettes.main.shapebean.Oval;
@@ -18,8 +18,8 @@ public class RhythmBallRole extends Role {
 
 	private Oval ball;
 
-	public RhythmBallRole(Context context) {
-		ball = new Oval(context.width / 2, context.height / 2, START_RADIUS, START_RADIUS);
+	public RhythmBallRole(IPalettesTarget target) {
+		ball = new Oval(target.getWidth() / 2, target.getHeight() / 2, START_RADIUS, START_RADIUS);
 
 		animator = new ToggleAnimatorBuilder()
 				.addToggle(new RepeatableAnimator(() ->
@@ -31,7 +31,7 @@ public class RhythmBallRole extends Role {
 		int centerX = ball.getCenterX();
 		int centerY = ball.getCenterY();
 		Animator animator = Animators.justDoIt(() -> ball.rotate(centerX - 100, centerY, 1));
-		context.addCleanUp(animator::stop);
+		target.addShutdownCleanUp(animator::stop);
 		animator.start();
 	}
 

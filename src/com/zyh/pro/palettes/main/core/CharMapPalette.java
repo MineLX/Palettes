@@ -7,9 +7,9 @@ public class CharMapPalette extends Palette {
 
 	private final CharMap map;
 
-	public CharMapPalette(Context context, int width, int height) {
-		super(context);
-		map = CharMap.withSize(width, height);
+	CharMapPalette(IPalettesTarget target) {
+		super(target);
+		map = CharMap.withSize(target.getWidth(), target.getHeight());
 	}
 
 	public String toPlainText() {

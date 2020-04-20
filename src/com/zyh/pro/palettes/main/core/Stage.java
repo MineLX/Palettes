@@ -13,16 +13,12 @@ public class Stage {
 
 	private final IPalette palette;
 
-	private final Context context;
+	private final IPalettesTarget target;
 
-	private final FrameTarget target;
-
-	public Stage(IPaletteFactory paletteFactory, int width, int height, int backgroundValue) {
-		context = new Context(paletteFactory, width, height);
-		palette = paletteFactory.createPalette(context);
+	public Stage(IPalettesFactory paletteFactory, int backgroundValue) {
+		target = paletteFactory.createTarget();
+		palette = paletteFactory.createPalette();
 		root = new ClearRole(backgroundValue);
-
-		target = new FrameTarget(null);
 
 		Animator repaint = Animators.justDoIt(this::repaint);
 		palette.addCleanUp(() -> stopRepaint(repaint));
@@ -45,11 +41,11 @@ public class Stage {
 		root.paint(palette);
 	}
 
-	public Context getContext() {
-		return context;
-	}
-
 	public void addKeyListener(KeyEvent.KeyListener keyListener) {
 		target.addKeyListener(keyListener);
+	}
+
+	public IPalettesTarget getTarget() {
+		return target;
 	}
 }

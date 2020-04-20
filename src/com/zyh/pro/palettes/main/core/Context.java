@@ -1,7 +1,5 @@
 package com.zyh.pro.palettes.main.core;
 
-import com.zyh.pro.palettes.main.core.IPaletteFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +11,14 @@ public class Context {
 
 	private final List<Runnable> cleanups;
 
-	Context(IPaletteFactory paletteFactory, int width, int height) {
+	Context(IPalettesTarget target, int width, int height) {
+//		this.width = target.getWidth();
+//		this.height = target.getHeight();
 		this.width = width;
 		this.height = height;
 
 		cleanups = new ArrayList<>();
-		paletteFactory.addOnWindowClosed(() -> cleanups.forEach(Runnable::run)); // FIXME 2020/4/16  wait for me!!!   responsibility switching
+		target.addShutdownCleanUp(() -> cleanups.forEach(Runnable::run));
 	}
 
 	public void addCleanUp(Runnable cleanup) {

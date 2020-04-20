@@ -9,8 +9,8 @@ public class D2DPalette extends Palette {
 		System.load("C:\\Users\\Remain\\Desktop\\NEW EDITION\\SplasherLib\\Debug\\libSplasherLib.dll");
 	}
 
-	public D2DPalette(Context context, JFrame frame) {
-		super(context);
+	public D2DPalette(IPalettesTarget target, JFrame frame) {
+		super(target);
 		createD2D(frame);
 	}
 
@@ -53,11 +53,11 @@ public class D2DPalette extends Palette {
 
 	@Override
 	public int getWidth() {
-		return context.width;
+		return target.getWidth();
 	}
 
 	@Override
 	public int getHeight() {
-		return context.height;
+		return target.getHeight();
 	}
 }

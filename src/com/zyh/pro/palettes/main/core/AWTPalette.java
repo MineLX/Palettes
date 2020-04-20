@@ -7,8 +7,8 @@ public class AWTPalette extends Palette {
 
 	private final Graphics graphics;
 
-	public AWTPalette(Context context, JFrame frame) {
-		super(context);
+	public AWTPalette(IPalettesTarget target, JFrame frame) {
+		super(target);
 		graphics = frame.getGraphics();
 	}
 
@@ -63,11 +63,11 @@ public class AWTPalette extends Palette {
 
 	@Override
 	public int getWidth() {
-		return context.width;
+		return target.getWidth();
 	}
 
 	@Override
 	public int getHeight() {
-		return context.height;
+		return target.getHeight();
 	}
 }

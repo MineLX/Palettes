@@ -1,6 +1,6 @@
 package com.zyh.pro.palettes.test;
 
-import com.zyh.pro.palettes.main.core.D2DPaletteFactory;
+import com.zyh.pro.palettes.main.core.D2DPalettesFactory;
 import com.zyh.pro.palettes.main.core.Stage;
 import com.zyh.pro.palettes.main.core.view.LayoutInflater;
 import com.zyh.pro.palettes.main.core.view.LinearLayout;
@@ -13,8 +13,8 @@ import java.util.HashMap;
 public class ViewTest {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		Stage stage = new Stage(new D2DPaletteFactory(),
-				1000, 600, 0);
+		Stage stage = new Stage(new D2DPalettesFactory(1000, 600),
+				0);
 
 		ViewGroup group = getLayoutByInflation();
 		group.measure(1000, 600);
