@@ -18,7 +18,7 @@ public abstract class FramePaletteFactory implements IPaletteFactory {
 
 	private final List<Runnable> cleanups;
 
-	protected FramePaletteFactory() {
+	FramePaletteFactory() {
 		cleanups = new ArrayList<>();
 
 		frame = new PaintLessFrame();
