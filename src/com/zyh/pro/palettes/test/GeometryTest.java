@@ -1,8 +1,8 @@
 package com.zyh.pro.palettes.test;
 
-import com.zyh.pro.palettes.main.Oval;
-import com.zyh.pro.palettes.main.Point;
-import com.zyh.pro.palettes.main.Rect;
+import com.zyh.pro.palettes.main.shapebean.Oval;
+import com.zyh.pro.palettes.main.shapebean.Point;
+import com.zyh.pro.palettes.main.shapebean.Rect;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;

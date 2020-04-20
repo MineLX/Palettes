@@ -1,17 +1,69 @@
 package com.zyh.pro.palettes.test;
 
-import com.zyh.pro.palettes.main.LinearLayout;
-import com.zyh.pro.palettes.main.View;
+import com.zyh.pro.palettes.main.core.view.LinearLayout;
+import com.zyh.pro.palettes.main.core.view.MotionEvent;
+import com.zyh.pro.palettes.main.core.view.RectView;
+import com.zyh.pro.palettes.main.core.view.View;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.zyh.pro.palettes.main.core.view.MotionEvent.MotionType.*;
+import static com.zyh.pro.palettes.main.core.view.MotionEvent.get;
 import static java.lang.Integer.parseInt;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class ViewLayoutTest {
+
+	@Test
+	public void edge_only_layout() {
+		LinearLayout layout = getFullScreenLinearLayout(LinearLayout.HORIZONTAL);
+		testMotion(layout, false, 0, 0, DOWN);
+		testMotion(layout, false, 0, 0, MOVE);
+		testMotion(layout, false, 0, 0, UP);
+		testMotion(layout, false, 0, 0, DOWN);
+		testMotion(layout, false, 0, 0, MOVE);
+		testMotion(layout, false, 0, 0, UP);
+	}
+
+	@Test
+	public void move_event() {
+		LinearLayout layout = getEventTestLayout();
+
+		testMotion(layout, true, 0, 0, DOWN);
+		testMotion(layout, true, 0, 0, MOVE);
+		testMotion(layout, true, 1, 1, MOVE);
+		testMotion(layout, true, 4, 2, MOVE);
+		testMotion(layout, true, 999, 999, MOVE);
+		testMotion(layout, true, 6666, 6666, MOVE);
+		testMotion(layout, true, 0, 0, UP);
+		testMotion(layout, false, 0, 0, MOVE);
+	}
+
+	@Test
+	public void down_event_out_of_viewBound() {
+		LinearLayout linearLayout = getEventTestLayout();
+		testMotion(linearLayout, true, 0, 0, DOWN);
+		testMotion(linearLayout, true, 0, 0, UP);
+
+		testMotion(linearLayout, false, 0, 51, DOWN);
+		testMotion(linearLayout, false, 0, 50, UP);
+	}
+
+	@Test
+	public void click_event() {
+		LinearLayout verticalLayout = getEventTestLayout();
+
+		testMotion(verticalLayout, true, 10, 20, DOWN);
+		testMotion(verticalLayout, true, 10, 20, UP);
+	}
+
+	private void testMotion(LinearLayout linearLayout, boolean expected, int x, int y, MotionEvent.MotionType type) {
+		assertThat(linearLayout.dispatchMotionEvent(get(type, x, y)), is(expected));
+	}
+
 	@Test
 	public void layout_wrap_content_overflow() {
 		HashMap<String, String> attributes = getAttributes("-2", "-2");
@@ -225,5 +277,14 @@ public class ViewLayoutTest {
 		assertThat(view.getY(), is(y));
 		assertThat(view.getWidth(), is(width));
 		assertThat(view.getHeight(), is(height));
+	}
+
+	private LinearLayout getEventTestLayout() {
+		LinearLayout result = getFullScreenLinearLayout(LinearLayout.VERTICAL);
+		RectView child = new RectView(getAttributes("-1", "50"), 0xff00ff);
+		result.addChild(child);
+		result.measure(60, 100);
+		result.layout(0, 0);
+		return result;
 	}
 }

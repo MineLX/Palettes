@@ -1,6 +1,6 @@
 package com.zyh.pro.palettes.test;
 
-import com.zyh.pro.palettes.main.ReflectObject;
+import com.zyh.pro.palettes.main.common.ReflectObject;
 import org.junit.Test;
 
 import java.util.HashMap;

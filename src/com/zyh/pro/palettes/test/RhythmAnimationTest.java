@@ -1,6 +1,10 @@
 package com.zyh.pro.palettes.test;
 
-import com.zyh.pro.palettes.main.*;
+import com.zyh.pro.palettes.main.core.D2DPaletteFactory;
+import com.zyh.pro.palettes.main.core.Stage;
+import com.zyh.pro.palettes.main.core.role.ColorRole;
+import com.zyh.pro.palettes.main.core.role.RhythmBallRole;
+import com.zyh.pro.palettes.main.rhythms.Chain;
 import com.zyh.pro.palettes.main.rhythms.Rhythm;
 import com.zyh.pro.palettes.main.rhythms.RhythmChain;
 import com.zyh.pro.taskscheduler.main.Schedulers;

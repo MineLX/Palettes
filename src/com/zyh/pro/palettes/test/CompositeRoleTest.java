@@ -1,6 +1,11 @@
 package com.zyh.pro.palettes.test;
 
-import com.zyh.pro.palettes.main.*;
+import com.zyh.pro.palettes.main.core.D2DPaletteFactory;
+import com.zyh.pro.palettes.main.core.Stage;
+import com.zyh.pro.palettes.main.core.role.ClearRole;
+import com.zyh.pro.palettes.main.core.role.CompositeRole;
+import com.zyh.pro.palettes.main.core.role.LineRole;
+import com.zyh.pro.palettes.main.core.role.RectRole;
 
 public class CompositeRoleTest {
 	public static void main(String[] args) throws InterruptedException {

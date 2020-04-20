@@ -1,9 +1,9 @@
 package com.zyh.pro.palettes.test;
 
-import com.zyh.pro.palettes.main.Stage;
-import com.zyh.pro.palettes.main.D2DPaletteFactory;
-import com.zyh.pro.palettes.main.IPaletteFactory;
-import com.zyh.pro.palettes.main.TestRole;
+import com.zyh.pro.palettes.main.core.Stage;
+import com.zyh.pro.palettes.main.core.D2DPaletteFactory;
+import com.zyh.pro.palettes.main.core.IPaletteFactory;
+import com.zyh.pro.palettes.main.core.role.TestRole;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

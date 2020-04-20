@@ -1,8 +1,8 @@
 package com.zyh.pro.palettes.test;
 
-import com.zyh.pro.palettes.main.Stage;
-import com.zyh.pro.palettes.main.AwtPaletteFactory;
-import com.zyh.pro.palettes.main.TestRole;
+import com.zyh.pro.palettes.main.core.Stage;
+import com.zyh.pro.palettes.main.core.AwtPaletteFactory;
+import com.zyh.pro.palettes.main.core.role.TestRole;
 
 public class GraphStageTest {
 	public static void main(String[] args) {

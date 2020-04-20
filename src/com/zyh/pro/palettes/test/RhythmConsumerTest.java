@@ -1,7 +1,7 @@
 package com.zyh.pro.palettes.test;
 
-import com.zyh.pro.palettes.main.Chain;
-import com.zyh.pro.palettes.main.RhythmConsumer;
+import com.zyh.pro.palettes.main.rhythms.Chain;
+import com.zyh.pro.palettes.main.rhythms.RhythmConsumer;
 import com.zyh.pro.palettes.main.rhythms.Rhythm;
 import com.zyh.pro.taskscheduler.main.CallbackTask;
 import org.junit.Test;

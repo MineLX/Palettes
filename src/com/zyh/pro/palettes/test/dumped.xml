@@ -1,0 +1,5 @@
+<LinearLayout orientation="1" widthSpec="-1" heightSpec="-1">
+    <RectView margin="5" heightSpec="-1" widthSpec="40"></RectView>
+    <RectView margin="5" heightSpec="-1" widthSpec="40"></RectView>
+    <RectView margin="2" heightSpec="-1" widthSpec="60"></RectView>
+</LinearLayout>
