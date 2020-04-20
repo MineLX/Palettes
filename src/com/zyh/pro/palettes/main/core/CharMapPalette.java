@@ -1,7 +1,7 @@
 package com.zyh.pro.palettes.main.core;
 
-import com.zyh.pro.palettes.main.charmap.CharMap;
-import com.zyh.pro.palettes.main.charmap.StringCharArrayTransformer;
+import com.zyh.pro.palettes.main.common.charmap.CharMap;
+import com.zyh.pro.palettes.main.common.charmap.StringCharArrayTransformer;
 
 public class CharMapPalette extends Palette {
 

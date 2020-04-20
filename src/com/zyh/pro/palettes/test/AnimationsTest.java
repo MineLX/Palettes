@@ -15,13 +15,11 @@ public class AnimationsTest {
 		stage.addKeyListener(new KeyEvent.KeyListener() {
 			@Override
 			public void onDown(KeyEvent keyEvent) {
-				System.out.println("onDown");
 				ball.animate();
 			}
 
 			@Override
 			public void onUp(KeyEvent keyEvent) {
-				System.out.println("onUp");
 			}
 		});
 		ColorRole container = new ColorRole(0x063A66);

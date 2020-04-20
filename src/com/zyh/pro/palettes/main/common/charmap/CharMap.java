@@ -1,4 +1,4 @@
-package com.zyh.pro.palettes.main.charmap;
+package com.zyh.pro.palettes.main.common.charmap;
 
 import java.util.Arrays;
 

@@ -1,5 +1,6 @@
 package com.zyh.pro.palettes.test;
 
+import com.zyh.pro.palettes.main.core.AwtPalettesFactory;
 import com.zyh.pro.palettes.main.core.D2DPalettesFactory;
 import com.zyh.pro.palettes.main.core.Stage;
 import com.zyh.pro.palettes.main.core.role.ClearRole;
@@ -16,7 +17,7 @@ public class CompositeRoleTest {
 		compositeRole.addRole(rect);
 		compositeRole.addRole(line);
 
-		Stage stage = new Stage(new D2DPalettesFactory(1000, 600), 0);
+		Stage stage = new Stage(new AwtPalettesFactory(1000, 600), 0);
 		stage.addRole(compositeRole);
 
 		Thread.sleep(5000);

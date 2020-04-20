@@ -23,7 +23,6 @@ public class TestRoleTest {
 			}
 			@Override
 			public void onUp(KeyEvent keyEvent) {
-
 			}
 		});
 		stage.addRole(new TestRole(stage.getTarget()));
