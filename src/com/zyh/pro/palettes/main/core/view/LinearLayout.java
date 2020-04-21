@@ -1,5 +1,7 @@
 package com.zyh.pro.palettes.main.core.view;
 
+import com.zyh.pro.palettes.main.core.IPalette;
+
 import java.util.Map;
 
 import static java.lang.Integer.parseInt;
@@ -20,24 +22,30 @@ public class LinearLayout extends ViewGroup {
 	}
 
 	@Override
-	protected void onMeasureHeight(int remainderHeight) {
-		super.onMeasureHeight(remainderHeight);
+	protected MeasureSpec createWidthSpec(MeasureParams measureParams) {
+		return new LinearLayoutMeasure(
+				measureParams);
+	}
 
-		new LinearLayoutMeasure(this, getParams().getHeightSpec(), view -> view::onMeasureHeight,
-				View::getBoundHeight, this::setHeight, this::getHeight).measure(remainderHeight);
+	@Override
+	protected MeasureSpec createHeightSpec(MeasureParams measureParams) {
+		return new LinearLayoutMeasure(
+				measureParams);
 	}
 
 	@Override
 	protected void onMeasureWidth(int remainderWidth) {
-		super.onMeasureWidth(remainderWidth);
-
-		new LinearLayoutMeasure(this, getParams().getWidthSpec(), view -> view::onMeasureWidth,
-				View::getBoundWidth, this::setWidth, this::getWidth).measure(remainderWidth);
+		measureSelfWidth(remainderWidth);
 	}
 
 	@Override
-	public void layout(int recommendedX, int recommendedY) {
-		super.layout(recommendedX, recommendedY);
+	protected void onMeasureHeight(int remainderHeight) {
+		measureSelfHeight(remainderHeight);
+	}
+
+	@Override
+	protected void onLayout(int recommendedX, int recommendedY) {
+		layoutSelf(recommendedX, recommendedY);
 
 		int used = 0;
 		for (View child : getChildren())
@@ -52,5 +60,9 @@ public class LinearLayout extends ViewGroup {
 			child.layout(0, progress);
 			return child.getBoundHeight();
 		}
+	}
+
+	@Override
+	protected void onGroupDraw(IPalette palette) {
 	}
 }

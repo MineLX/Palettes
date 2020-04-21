@@ -25,6 +25,9 @@ public class ViewGroup extends View {
 
 	public void addChild(View child) {
 		children.add(child);
+
+		this.widthSpec.addChild(child.widthSpec);
+		this.heightSpec.addChild(child.heightSpec);
 	}
 
 	public View getChildAt(int at) {
@@ -36,6 +39,25 @@ public class ViewGroup extends View {
 	}
 
 	protected void onGroupDraw(IPalette palette) {
+		palette.clear(0xffffff);
+	}
+
+	@Override
+	protected MeasureSpec createWidthSpec(MeasureParams measureParams) {
+		return new ViewGroupMeasureSpec(measureParams);
+	}
+
+	@Override
+	protected MeasureSpec createHeightSpec(MeasureParams measureParams) {
+		return new ViewGroupMeasureSpec(measureParams);
+	}
+
+	@Override
+	protected void onLayout(int recommendedX, int recommendedY) {
+		layoutSelf(recommendedX, recommendedY);
+
+		for (View child : children)
+			child.layout(recommendedX, recommendedY);
 	}
 
 	@Override
@@ -59,5 +81,19 @@ public class ViewGroup extends View {
 	@Override
 	protected boolean onMotionMove(MotionEvent event) {
 		return false;
+	}
+
+	public static class ViewGroupMeasureSpec extends MeasureSpec {
+		protected ViewGroupMeasureSpec(MeasureParams measureParams) {
+			super(measureParams);
+		}
+
+		@Override
+		public void measure(int remainder) {
+			super.measure(remainder);
+
+			for (MeasureSpec child : getChildren())
+				child.measure(remainder);
+		}
 	}
 }

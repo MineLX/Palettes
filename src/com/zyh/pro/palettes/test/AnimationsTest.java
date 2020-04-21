@@ -1,7 +1,7 @@
 package com.zyh.pro.palettes.test;
 
 import com.zyh.pro.palettes.main.core.D2DPalettesFactory;
-import com.zyh.pro.palettes.main.core.Stage;
+import com.zyh.pro.palettes.main.core.RoleStage;
 import com.zyh.pro.palettes.main.core.role.BallRole;
 import com.zyh.pro.palettes.main.core.role.ColorRole;
 import com.zyh.pro.palettes.main.core.view.KeyEvent;
@@ -11,7 +11,7 @@ public class AnimationsTest {
 	private static BallRole ball;
 
 	public static void main(String[] args) throws InterruptedException {
-		Stage stage = new Stage(new D2DPalettesFactory(1000, 600), 0);
+		RoleStage stage = new RoleStage(new D2DPalettesFactory(1000, 600), 0);
 		stage.addKeyListener(new KeyEvent.KeyListener() {
 			@Override
 			public void onDown(KeyEvent keyEvent) {

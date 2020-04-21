@@ -1,8 +1,10 @@
 package com.zyh.pro.palettes.main.core.role;
 
 import com.zyh.pro.palettes.main.core.IPalette;
+import com.zyh.pro.palettes.main.core.view.IMotionDispatcher;
+import com.zyh.pro.palettes.main.core.view.MotionEvent;
 
-public abstract class Role {
+public abstract class Role implements IMotionDispatcher {
 
 	private boolean visible;
 
@@ -31,4 +33,9 @@ public abstract class Role {
 	}
 
 	protected abstract void onDraw(IPalette palette);
+
+	@Override
+	public boolean dispatchMotionEvent(MotionEvent event) {
+		return false;
+	}
 }

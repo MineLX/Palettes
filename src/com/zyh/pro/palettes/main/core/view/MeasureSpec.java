@@ -1,25 +1,58 @@
 package com.zyh.pro.palettes.main.core.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MeasureSpec {
 
-	static final int MATCH_PARENT = -1;
+	private static final int MATCH_PARENT = -1;
 
-	static final int WRAP_CONTENT = -2;
+	private static final int WRAP_CONTENT = -2;
 
-	private final View.Params params;
+	private final List<MeasureSpec> children;
 
-	MeasureSpec(View.Params params) {
-		this.params = params;
+	private final MeasureParams measureParams;
+
+	private int measuredValue;
+
+	public MeasureSpec(MeasureParams measureParams) {
+		this.measureParams = measureParams;
+
+		children = new ArrayList<>();
 	}
 
-	int measure(int remainder, int contentSize, int specParam) {
-		if (specParam == MATCH_PARENT) {
-			return calculateBestSize(remainder, remainder);
-		} else if (specParam == WRAP_CONTENT) {
-			return calculateBestSize(remainder, contentSize);
+	void addChild(MeasureSpec child) {
+		children.add(child);
+	}
+
+	protected List<MeasureSpec> getChildren() {
+		return children;
+	}
+
+	public void measure(int remainder) {
+		if (isMatchParent()) {
+			onMeasureMatchParent(remainder);
+		} else if (isWrapContent()) {
+			onMeasureWrapContent(remainder);
 		} else { // exactly
-			return specParam;
+			onMeasureExactly(remainder);
 		}
+	}
+
+	protected int getContentSize(int remainder) {
+		return 0;
+	}
+
+	protected void onMeasureExactly(int remainder) {
+		measuredValue = measureParams.getSpecParam();
+	}
+
+	protected void onMeasureWrapContent(int remainder) {
+		measuredValue = calculateBestSize(remainder, getContentSize(remainder));
+	}
+
+	protected void onMeasureMatchParent(int remainder) {
+		measuredValue = calculateBestSize(remainder, remainder);
 	}
 
 	private int calculateBestSize(int remainderSize, int specifiedSize) {
@@ -32,7 +65,27 @@ public class MeasureSpec {
 		return specifiedSize + allMarginSize() > remainderSize;
 	}
 
-	private int allMarginSize() {
-		return params.getMargin() * 2;
+	public final int getBoundSize() {
+		return getMeasuredValue() + allMarginSize();
+	}
+
+	public int getMeasuredValue() {
+		return measuredValue;
+	}
+
+	public void setMeasuredValue(int measuredValue) {
+		this.measuredValue = measuredValue;
+	}
+
+	protected final int allMarginSize() {
+		return measureParams.getMargin() * 2;
+	}
+
+	private boolean isWrapContent() {
+		return measureParams.getSpecParam() == WRAP_CONTENT;
+	}
+
+	private boolean isMatchParent() {
+		return measureParams.getSpecParam() == MATCH_PARENT;
 	}
 }

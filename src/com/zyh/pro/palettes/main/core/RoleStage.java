@@ -7,7 +7,7 @@ import com.zyh.pro.palettes.main.core.role.CompositeRole;
 import com.zyh.pro.palettes.main.core.role.Role;
 import com.zyh.pro.palettes.main.core.view.KeyEvent;
 
-public class Stage {
+public class RoleStage {
 
 	private final CompositeRole root;
 
@@ -15,11 +15,11 @@ public class Stage {
 
 	private final IPalettesTarget target;
 
-	public Stage(IPalettesFactory paletteFactory, int backgroundValue) {
+	public RoleStage(IPalettesFactory paletteFactory, int backgroundValue) {
 		target = paletteFactory.createTarget();
 		palette = paletteFactory.createPalette();
-		root = new ClearRole(backgroundValue);
 
+		root = new ClearRole(backgroundValue);
 		Animator repaint = Animators.justDoIt(this::repaint);
 		palette.addCleanUp(() -> stopRepaint(repaint));
 		repaint.start();
@@ -47,5 +47,9 @@ public class Stage {
 
 	public IPalettesTarget getTarget() {
 		return target;
+	}
+
+	public CompositeRole getRoot() {
+		return root;
 	}
 }

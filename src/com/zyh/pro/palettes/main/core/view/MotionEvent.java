@@ -4,7 +4,7 @@ import com.zyh.pro.taskscheduler.main.Cache;
 
 public class MotionEvent {
 
-	private static final Cache<MotionEvent> cache = new Cache<>(MotionEvent::new);
+	private static final Cache<MotionEvent> CACHE = new Cache<>(MotionEvent::new);
 
 	private int x;
 
@@ -25,7 +25,7 @@ public class MotionEvent {
 	}
 
 	public static MotionEvent get(MotionType type, int x, int y) {
-		MotionEvent result = cache.get();
+		MotionEvent result = CACHE.get();
 		result.type = type;
 		result.x = x;
 		result.y = y;
@@ -33,7 +33,7 @@ public class MotionEvent {
 	}
 
 	private static void toCache(MotionEvent item) {
-		cache.add(item);
+		CACHE.add(item);
 	}
 
 	@Override

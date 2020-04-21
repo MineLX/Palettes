@@ -19,13 +19,9 @@ public class View extends Role implements MotionEvent.MotionCallback, I2D {
 
 	int y;
 
-	private int width;
+	protected final MeasureSpec widthSpec;
 
-	private int height;
-
-	private final MeasureSpec widthSpec;
-
-	private final MeasureSpec heightSpec;
+	protected final MeasureSpec heightSpec;
 
 	private final Pointer pointer;
 
@@ -34,9 +30,17 @@ public class View extends Role implements MotionEvent.MotionCallback, I2D {
 
 		params = new Params(attributes);
 
-		widthSpec = new MeasureSpec(params);
-		heightSpec = new MeasureSpec(params);
+		widthSpec = createWidthSpec(new MeasureParams(params.getWidthSpec(), params.margin));
+		heightSpec = createHeightSpec(new MeasureParams(params.getHeightSpec(), params.margin));
 		pointer = new Pointer();
+	}
+
+	protected MeasureSpec createWidthSpec(MeasureParams measureParams) {
+		return new MeasureSpec(measureParams);
+	}
+
+	protected MeasureSpec createHeightSpec(MeasureParams measureParams) {
+		return new MeasureSpec(measureParams);
 	}
 
 	@Override
@@ -48,32 +52,41 @@ public class View extends Role implements MotionEvent.MotionCallback, I2D {
 	protected void onViewDraw(IPalette palette) {
 	}
 
-	public void measure(int remainderWidth, int remainderHeight) {
+	public final void measure(int remainderWidth, int remainderHeight) {
 		onMeasureWidth(remainderWidth);
 		onMeasureHeight(remainderHeight);
 	}
 
+	protected final void measureSelfHeight(int remainderHeight) {
+		heightSpec.measure(remainderHeight);
+	}
+
+	protected final void measureSelfWidth(int remainderWidth) {
+		widthSpec.measure(remainderWidth);
+	}
+
 	protected void onMeasureWidth(int remainderWidth) {
-		width = widthSpec.measure(remainderWidth, getContentWidth(remainderWidth), params.getWidthSpec());
+		measureSelfWidth(remainderWidth);
 	}
 
 	protected void onMeasureHeight(int remainderHeight) {
-		height = heightSpec.measure(remainderHeight, getContentHeight(remainderHeight), params.getHeightSpec());
+		measureSelfHeight(remainderHeight);
 	}
 
-	protected int getContentHeight(int remainderHeight) {
-		return 0;
+	public final void layout(int recommendedX, int recommendedY) {
+		onLayout(recommendedX, recommendedY);
 	}
 
-	protected int getContentWidth(int remainderWidth) {
-		return 0;
+	protected void onLayout(int recommendedX, int recommendedY) {
+		layoutSelf(recommendedX, recommendedY);
 	}
 
-	public void layout(int recommendedX, int recommendedY) {
+	protected void layoutSelf(int recommendedX, int recommendedY) {
 		setLocation(recommendedX + params.getMargin(), recommendedY + params.getMargin());
 	}
 
-	protected boolean dispatchMotionEvent(MotionEvent event) {
+	@Override
+	public boolean dispatchMotionEvent(MotionEvent event) {
 		if ((event.getType() == DOWN)
 				&& !collidedTo(event.getX(), event.getY()))
 			return false;
@@ -89,19 +102,19 @@ public class View extends Role implements MotionEvent.MotionCallback, I2D {
 	}
 
 	@Override
-	public boolean motionUp(MotionEvent event) {
+	public final boolean motionUp(MotionEvent event) {
 		if (pointer.up())
 			return onMotionUp(event);
 		return false;
 	}
 
 	@Override
-	public boolean motionDown(MotionEvent event) {
+	public final boolean motionDown(MotionEvent event) {
 		return pointer.down() && onMotionDown(event);
 	}
 
 	@Override
-	public boolean motionMove(MotionEvent event) {
+	public final boolean motionMove(MotionEvent event) {
 		return pointer.move() && onMotionMove(event);
 	}
 
@@ -141,12 +154,12 @@ public class View extends Role implements MotionEvent.MotionCallback, I2D {
 
 	@Override
 	public int getWidth() {
-		return width;
+		return widthSpec.getMeasuredValue();
 	}
 
 	@Override
 	public int getHeight() {
-		return height;
+		return heightSpec.getMeasuredValue();
 	}
 
 	@Override
@@ -161,12 +174,12 @@ public class View extends Role implements MotionEvent.MotionCallback, I2D {
 
 	@Override
 	public void setWidth(int width) {
-		this.width = width;
+		widthSpec.setMeasuredValue(width);
 	}
 
 	@Override
 	public void setHeight(int height) {
-		this.height = height;
+		heightSpec.setMeasuredValue(height);
 	}
 
 	@Override

@@ -1,9 +1,6 @@
 package com.zyh.pro.palettes.test;
 
-import com.zyh.pro.palettes.main.core.view.LinearLayout;
-import com.zyh.pro.palettes.main.core.view.MotionEvent;
-import com.zyh.pro.palettes.main.core.view.RectView;
-import com.zyh.pro.palettes.main.core.view.View;
+import com.zyh.pro.palettes.main.core.view.*;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -12,10 +9,23 @@ import java.util.Map;
 import static com.zyh.pro.palettes.main.core.view.MotionEvent.MotionType.*;
 import static com.zyh.pro.palettes.main.core.view.MotionEvent.get;
 import static java.lang.Integer.parseInt;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class ViewLayoutTest {
+
+	@Test
+	public void viewGroup() {
+		ViewGroup group = new ViewGroup(new HashMap<>());
+		View marginView = getMarginView("-1", "-1", "10");
+		group.addChild(marginView);
+		group.measure(100, 200);
+		group.layout(0, 0);
+
+		verifyRect(group, 0, 0, 100, 200);
+		verifyRect(marginView, 10, 10, 80, 180);
+	}
 
 	@Test
 	public void edge_only_layout() {
@@ -259,8 +269,13 @@ public class ViewLayoutTest {
 		attributes.put("margin", margin);
 		return new View(attributes) {
 			@Override
-			protected int getContentWidth(int remainderWidth) {
-				return contentWidth;
+			protected MeasureSpec createWidthSpec(MeasureParams measureParams) {
+				return new MeasureSpec(measureParams) {
+					@Override
+					protected int getContentSize(int remainder) {
+						return contentWidth;
+					}
+				};
 			}
 		};
 	}

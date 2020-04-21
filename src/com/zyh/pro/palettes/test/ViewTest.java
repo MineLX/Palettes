@@ -1,7 +1,7 @@
 package com.zyh.pro.palettes.test;
 
 import com.zyh.pro.palettes.main.core.D2DPalettesFactory;
-import com.zyh.pro.palettes.main.core.Stage;
+import com.zyh.pro.palettes.main.core.RoleStage;
 import com.zyh.pro.palettes.main.core.view.LayoutInflater;
 import com.zyh.pro.palettes.main.core.view.LinearLayout;
 import com.zyh.pro.palettes.main.core.view.RectView;
@@ -13,10 +13,10 @@ import java.util.HashMap;
 public class ViewTest {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		Stage stage = new Stage(new D2DPalettesFactory(1000, 600),
+		RoleStage stage = new RoleStage(new D2DPalettesFactory(1000, 600),
 				0);
 
-		ViewGroup group = getLayoutByInflation();
+		ViewGroup group = getLayout();
 		group.measure(1000, 600);
 		group.layout(0, 0);
 		stage.addRole(group);
@@ -27,6 +27,11 @@ public class ViewTest {
 	}
 
 	private static ViewGroup getLayout() {
+		HashMap<String, String> fullScreen = new HashMap<>();
+		fullScreen.put("widthSpec", "-1");
+		fullScreen.put("heightSpec", "-1");
+		ViewGroup viewGroup = new ViewGroup(fullScreen);
+
 		HashMap<String, String> groupAttributes = new HashMap<>();
 		LinearLayout group = new LinearLayout(groupAttributes);
 
@@ -34,8 +39,12 @@ public class ViewTest {
 		attributes.put("widthSpec", "-1");
 		attributes.put("heightSpec", "100");
 		attributes.put("margin", "10");
-		RectView rectView = new RectView(attributes, 0xff00ff);
-		group.addChild(rectView);
-		return group;
+
+		group.addChild(new RectView(attributes, 0xff00ff));
+		group.addChild(new RectView(attributes, 0x00ff00));
+
+		viewGroup.addChild(group);
+		return viewGroup;
+//		return group;
 	}
 }
