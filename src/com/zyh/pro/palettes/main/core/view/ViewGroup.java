@@ -23,11 +23,14 @@ public class ViewGroup extends View {
 			child.onDraw(palette);
 	}
 
+	protected void onGroupDraw(IPalette palette) {
+	}
+
 	public void addChild(View child) {
 		children.add(child);
 
-		this.widthSpec.addChild(child.widthSpec);
-		this.heightSpec.addChild(child.heightSpec);
+		widthSpec.addChild(child.widthSpec);
+		heightSpec.addChild(child.heightSpec);
 	}
 
 	public View getChildAt(int at) {
@@ -38,24 +41,19 @@ public class ViewGroup extends View {
 		return children;
 	}
 
-	protected void onGroupDraw(IPalette palette) {
-		palette.clear(0xffffff);
-	}
-
 	@Override
-	protected MeasureSpec createWidthSpec(MeasureParams measureParams) {
+	protected MeasureSpec createSpec(MeasureParams measureParams) {
 		return new ViewGroupMeasureSpec(measureParams);
 	}
 
 	@Override
-	protected MeasureSpec createHeightSpec(MeasureParams measureParams) {
-		return new ViewGroupMeasureSpec(measureParams);
+	public void layout(int recommendedX, int recommendedY) {
+		super.layout(recommendedX, recommendedY);
+
+		onLayoutChildren(recommendedX, recommendedY);
 	}
 
-	@Override
-	protected void onLayout(int recommendedX, int recommendedY) {
-		layoutSelf(recommendedX, recommendedY);
-
+	protected void onLayoutChildren(int recommendedX, int recommendedY) {
 		for (View child : children)
 			child.layout(recommendedX, recommendedY);
 	}

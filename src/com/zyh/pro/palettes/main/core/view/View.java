@@ -9,7 +9,7 @@ import java.util.Map;
 import static com.zyh.pro.palettes.main.core.view.MotionEvent.MotionType.DOWN;
 import static java.lang.Integer.parseInt;
 
-public class View extends Role implements MotionEvent.MotionCallback, I2D {
+public class View extends Role implements MotionEvent.MotionListener, I2D {
 
 	private final OffsetPalette offsetPalette;
 
@@ -27,19 +27,15 @@ public class View extends Role implements MotionEvent.MotionCallback, I2D {
 
 	public View(Map<String, String> attributes) {
 		offsetPalette = new OffsetPalette(this);
+		pointer = new Pointer();
 
 		params = new Params(attributes);
 
-		widthSpec = createWidthSpec(new MeasureParams(params.getWidthSpec(), params.margin));
-		heightSpec = createHeightSpec(new MeasureParams(params.getHeightSpec(), params.margin));
-		pointer = new Pointer();
+		widthSpec = createSpec(new MeasureParams(params.getWidthSpec(), params.margin));
+		heightSpec = createSpec(new MeasureParams(params.getHeightSpec(), params.margin));
 	}
 
-	protected MeasureSpec createWidthSpec(MeasureParams measureParams) {
-		return new MeasureSpec(measureParams);
-	}
-
-	protected MeasureSpec createHeightSpec(MeasureParams measureParams) {
+	protected MeasureSpec createSpec(MeasureParams measureParams) {
 		return new MeasureSpec(measureParams);
 	}
 
@@ -53,31 +49,11 @@ public class View extends Role implements MotionEvent.MotionCallback, I2D {
 	}
 
 	public final void measure(int remainderWidth, int remainderHeight) {
-		onMeasureWidth(remainderWidth);
-		onMeasureHeight(remainderHeight);
-	}
-
-	protected final void measureSelfHeight(int remainderHeight) {
+		widthSpec.measure(remainderWidth);
 		heightSpec.measure(remainderHeight);
 	}
 
-	protected final void measureSelfWidth(int remainderWidth) {
-		widthSpec.measure(remainderWidth);
-	}
-
-	protected void onMeasureWidth(int remainderWidth) {
-		measureSelfWidth(remainderWidth);
-	}
-
-	protected void onMeasureHeight(int remainderHeight) {
-		measureSelfHeight(remainderHeight);
-	}
-
-	public final void layout(int recommendedX, int recommendedY) {
-		onLayout(recommendedX, recommendedY);
-	}
-
-	protected void onLayout(int recommendedX, int recommendedY) {
+	public void layout(int recommendedX, int recommendedY) {
 		layoutSelf(recommendedX, recommendedY);
 	}
 
@@ -135,11 +111,11 @@ public class View extends Role implements MotionEvent.MotionCallback, I2D {
 	}
 
 	public int getBoundWidth() {
-		return getWidth() + params.getMargin() * 2;
+		return widthSpec.getBoundSize();
 	}
 
 	public int getBoundHeight() {
-		return getHeight() + params.getMargin() * 2;
+		return heightSpec.getBoundSize();
 	}
 
 	@Override

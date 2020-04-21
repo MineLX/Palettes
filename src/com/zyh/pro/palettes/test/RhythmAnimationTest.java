@@ -2,7 +2,9 @@ package com.zyh.pro.palettes.test;
 
 import com.zyh.pro.palettes.main.core.D2DPalettesFactory;
 import com.zyh.pro.palettes.main.core.RoleStage;
-import com.zyh.pro.palettes.main.core.role.ColorRole;
+import com.zyh.pro.palettes.main.core.role.ClearRole;
+import com.zyh.pro.palettes.main.core.role.FadeRole;
+import com.zyh.pro.palettes.main.core.role.CompositeRole;
 import com.zyh.pro.palettes.main.core.role.RhythmBallRole;
 import com.zyh.pro.palettes.main.core.view.KeyEvent;
 import com.zyh.pro.palettes.main.core.view.KeyEvent.KeyListener;
@@ -21,7 +23,8 @@ public class RhythmAnimationTest {
 	private static RhythmBallRole ball;
 
 	public static void main(String[] args) throws FileNotFoundException {
-		RoleStage stage = new RoleStage(new D2DPalettesFactory(1000, 600), 0);
+		CompositeRole role = new ClearRole(0);
+		RoleStage stage = new RoleStage(new D2DPalettesFactory(1000, 600), role);
 		stage.addKeyListener(new KeyListener() {
 			@Override
 			public void onDown(KeyEvent keyEvent) {
@@ -32,7 +35,7 @@ public class RhythmAnimationTest {
 
 			}
 		});
-		ColorRole container = new ColorRole(0x063A66);
+		FadeRole container = new FadeRole(0x063A66);
 		stage.addRole(container);
 
 		ball = new RhythmBallRole(stage.getTarget());

@@ -16,8 +16,7 @@ public class CompositeRoleTest {
 		compositeRole.addRole(rect);
 		compositeRole.addRole(line);
 
-		RoleStage stage = new RoleStage(new AwtPalettesFactory(1000, 600), 0);
-		stage.addRole(compositeRole);
+		RoleStage stage = new RoleStage(new AwtPalettesFactory(1000, 600), compositeRole);
 
 		Thread.sleep(5000);
 		rect.hide();

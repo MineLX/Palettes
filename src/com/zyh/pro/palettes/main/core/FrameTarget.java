@@ -1,15 +1,17 @@
 package com.zyh.pro.palettes.main.core;
 
+import com.zyh.pro.palettes.main.core.view.IMotionDispatcher;
 import com.zyh.pro.palettes.main.core.view.KeyEvent;
+import com.zyh.pro.palettes.main.core.view.MotionEvent;
 
 import javax.swing.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.zyh.pro.palettes.main.core.view.KeyEvent.get;
+import static com.zyh.pro.palettes.main.core.view.MotionEvent.MotionType.*;
+import static com.zyh.pro.palettes.main.core.view.MotionEvent.get;
 
 public class FrameTarget implements IPalettesTarget {
 
@@ -51,6 +53,28 @@ public class FrameTarget implements IPalettesTarget {
 	}
 
 	@Override
+	public void addMotionDispatcher(IMotionDispatcher dispatcher) {
+		frame.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				dispatcher.dispatchMotionEvent(get(DOWN, e.getX(), e.getY()));
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				dispatcher.dispatchMotionEvent(get(UP, e.getX(), e.getY()));
+			}
+
+		});
+		frame.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				dispatcher.dispatchMotionEvent(get(MOVE, e.getX(), e.getY()));
+			}
+		});
+	}
+
+	@Override
 	public void addShutdownCleanUp(Runnable cleanup) {
 		cleanups.add(cleanup);
 	}
@@ -63,5 +87,10 @@ public class FrameTarget implements IPalettesTarget {
 	@Override
 	public int getHeight() {
 		return height;
+	}
+
+	@Override
+	public void shutdown() {
+		frame.dispose();
 	}
 }

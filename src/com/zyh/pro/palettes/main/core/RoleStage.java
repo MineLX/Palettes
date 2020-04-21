@@ -2,24 +2,28 @@ package com.zyh.pro.palettes.main.core;
 
 import com.zyh.pro.animator.main.animators.Animator;
 import com.zyh.pro.animator.main.animators.Animators;
-import com.zyh.pro.palettes.main.core.role.ClearRole;
 import com.zyh.pro.palettes.main.core.role.CompositeRole;
 import com.zyh.pro.palettes.main.core.role.Role;
 import com.zyh.pro.palettes.main.core.view.KeyEvent;
 
 public class RoleStage {
 
-	private final CompositeRole root;
+	private final CompositeRole rootRole;
 
 	private final IPalette palette;
 
 	private final IPalettesTarget target;
 
-	public RoleStage(IPalettesFactory paletteFactory, int backgroundValue) {
-		target = paletteFactory.createTarget();
-		palette = paletteFactory.createPalette();
+	public RoleStage(IPalettesFactory palettesFactory, CompositeRole rootRole) {
+		this.rootRole = rootRole;
+		target = palettesFactory.createTarget();
+		palette = palettesFactory.createPalette();
 
-		root = new ClearRole(backgroundValue);
+		target.addMotionDispatcher(rootRole);
+		startRepaint();
+	}
+
+	private void startRepaint() {
 		Animator repaint = Animators.justDoIt(this::repaint);
 		palette.addCleanUp(() -> stopRepaint(repaint));
 		repaint.start();
@@ -34,11 +38,11 @@ public class RoleStage {
 	}
 
 	public void addRole(Role role) {
-		root.addRole(role);
+		rootRole.addRole(role);
 	}
 
 	private void repaint() {
-		root.paint(palette);
+		rootRole.paint(palette);
 	}
 
 	public void addKeyListener(KeyEvent.KeyListener keyListener) {
@@ -50,6 +54,6 @@ public class RoleStage {
 	}
 
 	public CompositeRole getRoot() {
-		return root;
+		return rootRole;
 	}
 }

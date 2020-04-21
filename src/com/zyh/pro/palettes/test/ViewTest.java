@@ -1,7 +1,10 @@
 package com.zyh.pro.palettes.test;
 
+import com.zyh.pro.palettes.main.core.AwtPalettesFactory;
 import com.zyh.pro.palettes.main.core.D2DPalettesFactory;
 import com.zyh.pro.palettes.main.core.RoleStage;
+import com.zyh.pro.palettes.main.core.role.ClearRole;
+import com.zyh.pro.palettes.main.core.role.CompositeRole;
 import com.zyh.pro.palettes.main.core.view.LayoutInflater;
 import com.zyh.pro.palettes.main.core.view.LinearLayout;
 import com.zyh.pro.palettes.main.core.view.RectView;
@@ -13,10 +16,10 @@ import java.util.HashMap;
 public class ViewTest {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		RoleStage stage = new RoleStage(new D2DPalettesFactory(1000, 600),
-				0);
+		CompositeRole role = new ClearRole(0);
+		RoleStage stage = new RoleStage(new AwtPalettesFactory(1000, 600), role);
 
-		ViewGroup group = getLayout();
+		ViewGroup group = getLayoutByInflation();
 		group.measure(1000, 600);
 		group.layout(0, 0);
 		stage.addRole(group);

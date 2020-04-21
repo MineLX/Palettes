@@ -22,31 +22,12 @@ public class LinearLayout extends ViewGroup {
 	}
 
 	@Override
-	protected MeasureSpec createWidthSpec(MeasureParams measureParams) {
-		return new LinearLayoutMeasure(
-				measureParams);
+	protected MeasureSpec createSpec(MeasureParams measureParams) {
+		return new LinearLayoutMeasure(measureParams);
 	}
 
 	@Override
-	protected MeasureSpec createHeightSpec(MeasureParams measureParams) {
-		return new LinearLayoutMeasure(
-				measureParams);
-	}
-
-	@Override
-	protected void onMeasureWidth(int remainderWidth) {
-		measureSelfWidth(remainderWidth);
-	}
-
-	@Override
-	protected void onMeasureHeight(int remainderHeight) {
-		measureSelfHeight(remainderHeight);
-	}
-
-	@Override
-	protected void onLayout(int recommendedX, int recommendedY) {
-		layoutSelf(recommendedX, recommendedY);
-
+	protected void onLayoutChildren(int recommendedX, int recommendedY) {
 		int used = 0;
 		for (View child : getChildren())
 			used += layoutChild(child, used) + 1;
@@ -60,9 +41,5 @@ public class LinearLayout extends ViewGroup {
 			child.layout(0, progress);
 			return child.getBoundHeight();
 		}
-	}
-
-	@Override
-	protected void onGroupDraw(IPalette palette) {
 	}
 }

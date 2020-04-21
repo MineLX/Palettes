@@ -8,11 +8,11 @@ import com.zyh.pro.palettes.main.rhythms.Rhythm;
 
 import java.awt.*;
 
-public class ColorRole extends CompositeRole {
+public class FadeRole extends CompositeRole {
 
 	private int color;
 
-	public ColorRole(int color) {
+	public FadeRole(int color) {
 		this.color = color;
 	}
 

@@ -16,6 +16,20 @@ import static org.junit.Assert.assertThat;
 public class ViewLayoutTest {
 
 	@Test
+	public void LinearLayout_exactly_spec() {
+		HashMap<String, String> groupAttributes = getAttributes("30", "40");
+		LinearLayout layout = new LinearLayout(groupAttributes);
+		View marginView = getMarginView("40", "50", "5");
+		layout.addChild(marginView);
+
+		layout.measure(100, 100);
+		layout.layout(0, 0);
+
+		verifyRect(marginView, 5, 5, 40, 50);
+		verifyRect(layout, 0, 0, 30, 40);
+	}
+
+	@Test
 	public void viewGroup() {
 		ViewGroup group = new ViewGroup(new HashMap<>());
 		View marginView = getMarginView("-1", "-1", "10");
@@ -269,7 +283,7 @@ public class ViewLayoutTest {
 		attributes.put("margin", margin);
 		return new View(attributes) {
 			@Override
-			protected MeasureSpec createWidthSpec(MeasureParams measureParams) {
+			protected MeasureSpec createSpec(MeasureParams measureParams) {
 				return new MeasureSpec(measureParams) {
 					@Override
 					protected int getContentSize(int remainder) {

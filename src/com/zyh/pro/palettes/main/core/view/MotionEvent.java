@@ -24,6 +24,9 @@ public class MotionEvent {
 		return type;
 	}
 
+	private MotionEvent() {
+	}
+
 	public static MotionEvent get(MotionType type, int x, int y) {
 		MotionEvent result = CACHE.get();
 		result.type = type;
@@ -38,39 +41,39 @@ public class MotionEvent {
 
 	@Override
 	public String toString() {
-		return "MotionEvent(" + x + ", " + y + ")";
+		return "MotionEvent(" + type + ", " + x + ", " + y + ")";
 	}
 
 	public enum MotionType {
 		DOWN {
 			@Override
-			protected boolean isConsumed(MotionCallback motionCallback, MotionEvent event) {
-				return motionCallback.motionDown(event);
+			protected boolean isConsumed(MotionListener motionListener, MotionEvent event) {
+				return motionListener.motionDown(event);
 			}
 		}, UP {
 			@Override
-			protected boolean isConsumed(MotionCallback motionCallback, MotionEvent event) {
-				return motionCallback.motionUp(event);
+			protected boolean isConsumed(MotionListener motionListener, MotionEvent event) {
+				return motionListener.motionUp(event);
 			}
 		}, MOVE {
 			@Override
-			protected boolean isConsumed(MotionCallback motionCallback, MotionEvent event) {
-				return motionCallback.motionMove(event);
+			protected boolean isConsumed(MotionListener motionListener, MotionEvent event) {
+				return motionListener.motionMove(event);
 			}
 		};
 
-		public final boolean onMotion(MotionEvent event, MotionCallback motionCallback) {
-			if (isConsumed(motionCallback, event)) {
+		public final boolean onMotion(MotionEvent event, MotionListener motionListener) {
+			if (isConsumed(motionListener, event)) {
 				toCache(event);
 				return true;
 			}
 			return false;
 		}
 
-		protected abstract boolean isConsumed(MotionCallback motionCallback, MotionEvent event);
+		protected abstract boolean isConsumed(MotionListener motionListener, MotionEvent event);
 	}
 
-	public interface MotionCallback {
+	public interface MotionListener {
 		boolean motionUp(MotionEvent event);
 
 		boolean motionDown(MotionEvent event);

@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
 
 public class FrameTargetTest {
 
-	public static void main(String[] arg) {
+	public static void main(String[] arg) throws InterruptedException {
 		JFrame frame = new JFrame();
 		frame.setSize(250, 250);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -32,5 +32,7 @@ public class FrameTargetTest {
 		target.addShutdownCleanUp(() -> System.out.println("cleanup"));
 		assertThat(target.getWidth(), is(250));
 		assertThat(target.getHeight(), is(250));
+		Thread.sleep(2000);
+		target.shutdown();
 	}
 }
