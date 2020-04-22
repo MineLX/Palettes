@@ -1,5 +1,6 @@
-<LinearLayout orientation="1" widthSpec="-1" heightSpec="-1">
-    <RectView margin="5" heightSpec="-1" widthSpec="40"></RectView>
-    <RectView margin="5" heightSpec="-1" widthSpec="40"></RectView>
-    <RectView margin="2" heightSpec="-1" widthSpec="60"></RectView>
+<LinearLayout orientation="0" widthSpec="-1" heightSpec="-1">
+    <RectView margin="5" heightSpec="40" widthSpec="-1"></RectView>
+    <RectView margin="5" heightSpec="40" widthSpec="-1"></RectView>
+    <RectView margin="2" heightSpec="60" widthSpec="-1"></RectView>
+    <Button margin="10" heightSpec="60" widthSpec="-1"></Button>
 </LinearLayout>

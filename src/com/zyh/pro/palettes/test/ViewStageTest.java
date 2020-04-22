@@ -19,17 +19,18 @@ public class ViewStageTest {
 				.inflate(Files.toString("C:\\Users\\Remain\\IdeaProjects\\Palettes\\src\\com\\zyh\\pro\\palettes\\test\\dumped.xml"));
 		navigator.forward(inflate);
 
-		Thread.sleep(4000);
-		Map<String, String> attributes = new HashMap<>();
-		attributes.put("widthSpec", "400");
-		attributes.put("heightSpec", "-1");
-		RectView rectView = new RectView(attributes, 0);
-		navigator.forward(rectView);
 
-		Thread.sleep(4000);
-		navigator.backward();
+//		Thread.sleep(4000);
+//		Map<String, String> attributes = new HashMap<>();
+//		attributes.put("widthSpec", "400");
+//		attributes.put("heightSpec", "-1");
+//		RectView rectView = new RectView(attributes, 0xff0000);
+//		navigator.forward(rectView);
 
-		Thread.sleep(4000);
-		navigator.backward();
+//		Thread.sleep(4000);
+//		navigator.backward();
+//
+//		Thread.sleep(4000);
+//		navigator.backward();
 	}
 }

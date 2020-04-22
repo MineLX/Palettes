@@ -19,8 +19,9 @@ public class LayoutInflater {
 			return new LinearLayout(xmlNode.getProperties());
 		if (xmlNode.getTag().equals("RectView"))
 			return new RectView(xmlNode.getProperties(), 0xff00ff);
+		if (xmlNode.getTag().equals("Button"))
+			return new Button(xmlNode.getProperties());
 
-		System.out.println("specified viewName is not found.");
-		return new View(null);
+		throw new IllegalArgumentException("specified viewName is not found.");
 	}
 }

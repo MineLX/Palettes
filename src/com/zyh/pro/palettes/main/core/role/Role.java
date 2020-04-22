@@ -1,10 +1,10 @@
 package com.zyh.pro.palettes.main.core.role;
 
 import com.zyh.pro.palettes.main.core.IPalette;
-import com.zyh.pro.palettes.main.core.view.IMotionDispatcher;
+import com.zyh.pro.palettes.main.core.view.MotionDispatcher;
 import com.zyh.pro.palettes.main.core.view.MotionEvent;
 
-public abstract class Role implements IMotionDispatcher {
+public abstract class Role implements MotionDispatcher {
 
 	private boolean visible;
 

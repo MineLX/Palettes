@@ -8,7 +8,7 @@ public class RectView extends View {
 
 	private final int value;
 
-	public RectView(Map<String, String> attributes, int value) {
+	public RectView(Map<String, String> attributes, int value) {  // FIXME 2020/4/22  wait for me!!!  attributes and value ?
 		super(attributes);
 
 		this.value = value;

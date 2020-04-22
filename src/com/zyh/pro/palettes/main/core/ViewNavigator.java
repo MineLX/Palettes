@@ -1,7 +1,6 @@
 package com.zyh.pro.palettes.main.core;
 
 import com.zyh.pro.palettes.main.core.role.ClearRole;
-import com.zyh.pro.palettes.main.core.view.IMotionDispatcher;
 import com.zyh.pro.palettes.main.core.view.MotionEvent;
 import com.zyh.pro.palettes.main.core.view.View;
 
@@ -21,9 +20,8 @@ public class ViewNavigator {
 		views = new Stack<>();
 		target = palettesFactory.createTarget();
 		palette = palettesFactory.createPalette();
-		backView = new ClearRole(0);
-
-		target.addMotionDispatcher(new MotionDispatcher());
+		backView = new MyClearRole();
+		target.addMotionDispatcher(backView);
 	}
 
 	public void forward(View view) {
@@ -47,12 +45,23 @@ public class ViewNavigator {
 		views.peek().paint(palette);
 	}
 
-	private class MotionDispatcher implements IMotionDispatcher {
+	private class MotionDispatcher implements com.zyh.pro.palettes.main.core.view.MotionDispatcher {
 		@Override
 		public boolean dispatchMotionEvent(MotionEvent event) {
-			if (!views.isEmpty())
-				return views.peek().dispatchMotionEvent(event);
-			return false;
+			if (views.isEmpty())
+				return false;
+			return views.peek().dispatchMotionEvent(event);
+		}
+	}
+
+	private class MyClearRole extends ClearRole {
+		private MyClearRole() {
+			super(0);
+		}
+
+		@Override
+		public boolean dispatchMotionEvent(MotionEvent event) {
+			return views.peek().dispatchMotionEvent(event);
 		}
 	}
 }

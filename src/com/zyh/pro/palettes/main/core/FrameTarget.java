@@ -1,8 +1,7 @@
 package com.zyh.pro.palettes.main.core;
 
-import com.zyh.pro.palettes.main.core.view.IMotionDispatcher;
+import com.zyh.pro.palettes.main.core.view.MotionDispatcher;
 import com.zyh.pro.palettes.main.core.view.KeyEvent;
-import com.zyh.pro.palettes.main.core.view.MotionEvent;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -53,7 +52,7 @@ public class FrameTarget implements IPalettesTarget {
 	}
 
 	@Override
-	public void addMotionDispatcher(IMotionDispatcher dispatcher) {
+	public void addMotionDispatcher(MotionDispatcher dispatcher) {
 		frame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
