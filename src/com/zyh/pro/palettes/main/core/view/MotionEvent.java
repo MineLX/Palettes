@@ -35,7 +35,7 @@ public class MotionEvent {
 		return result;
 	}
 
-	private static void toCache(MotionEvent item) {
+	public static void toCache(MotionEvent item) {
 		CACHE.add(item);
 	}
 
@@ -47,30 +47,30 @@ public class MotionEvent {
 	public enum MotionType {
 		DOWN {
 			@Override
-			protected boolean isConsumed(MotionListener motionListener, MotionEvent event) {
+			public boolean consume(MotionListener motionListener, MotionEvent event) {
 				return motionListener.motionDown(event);
 			}
 		}, UP {
 			@Override
-			protected boolean isConsumed(MotionListener motionListener, MotionEvent event) {
+			public boolean consume(MotionListener motionListener, MotionEvent event) {
 				return motionListener.motionUp(event);
 			}
 		}, MOVE {
 			@Override
-			protected boolean isConsumed(MotionListener motionListener, MotionEvent event) {
+			public boolean consume(MotionListener motionListener, MotionEvent event) {
 				return motionListener.motionMove(event);
 			}
 		};
 
-		public final boolean onMotion(MotionEvent event, MotionListener motionListener) {
-			if (isConsumed(motionListener, event)) {
+		public final boolean toCacheIfConsumed(MotionListener motionListener, MotionEvent event) {
+			if (consume(motionListener, event)) {
 				toCache(event);
 				return true;
 			}
 			return false;
 		}
 
-		protected abstract boolean isConsumed(MotionListener motionListener, MotionEvent event);
+		public abstract boolean consume(MotionListener motionListener, MotionEvent event);
 	}
 
 	public interface MotionListener {

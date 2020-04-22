@@ -51,7 +51,7 @@ public class ClickListener implements MotionDispatcher, MotionEvent.MotionListen
 
 	@Override
 	public boolean dispatchMotionEvent(MotionEvent event) {
-		return event.getType().onMotion(event, this);
+		return event.getType().consume(this, event);
 	}
 
 	public void setOnClickListener(OnClickListener onClickListener) {

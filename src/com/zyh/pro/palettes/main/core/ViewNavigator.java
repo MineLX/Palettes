@@ -45,15 +45,6 @@ public class ViewNavigator {
 		views.peek().paint(palette);
 	}
 
-	private class MotionDispatcher implements com.zyh.pro.palettes.main.core.view.MotionDispatcher {
-		@Override
-		public boolean dispatchMotionEvent(MotionEvent event) {
-			if (views.isEmpty())
-				return false;
-			return views.peek().dispatchMotionEvent(event);
-		}
-	}
-
 	private class MyClearRole extends ClearRole {
 		private MyClearRole() {
 			super(0);
@@ -61,7 +52,9 @@ public class ViewNavigator {
 
 		@Override
 		public boolean dispatchMotionEvent(MotionEvent event) {
-			return views.peek().dispatchMotionEvent(event);
+			if (!views.peek().dispatchMotionEvent(event))
+				MotionEvent.toCache(event);
+			return true;
 		}
 	}
 }

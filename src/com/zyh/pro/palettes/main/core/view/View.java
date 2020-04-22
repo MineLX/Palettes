@@ -1,10 +1,13 @@
 package com.zyh.pro.palettes.main.core.view;
 
+import com.zyh.pro.palettes.main.common.ReflectObject;
 import com.zyh.pro.palettes.main.core.IPalette;
 import com.zyh.pro.palettes.main.core.role.Role;
-import com.zyh.pro.palettes.main.common.ReflectObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import static com.zyh.pro.palettes.main.core.view.MotionEvent.MotionType.DOWN;
 import static java.lang.Integer.parseInt;
@@ -15,20 +18,21 @@ public class View extends Role implements MotionEvent.MotionListener, I2D {
 
 	private final Params params;
 
-	int x;
-
-	int y;
-
 	protected final MeasureSpec widthSpec;
 
 	protected final MeasureSpec heightSpec;
 
-	private final Pointer pointer;
+	private final Pointer pointer; // FIXME 2020/4/22  wait for me!!!  multi pointers
+
+	private MotionDispatcher motionDispatcherListener;
+
+	int x;
+
+	int y;
 
 	public View(Map<String, String> attributes) {
 		offsetPalette = new OffsetPalette(this);
 		pointer = new Pointer();
-
 		params = new Params(attributes);
 
 		widthSpec = createSpec(new MeasureParams(params.getWidthSpec(), params.margin));
@@ -54,11 +58,9 @@ public class View extends Role implements MotionEvent.MotionListener, I2D {
 	}
 
 	public void layout(int recommendedX, int recommendedY) {
-		layoutSelf(recommendedX, recommendedY);
-	}
-
-	protected void layoutSelf(int recommendedX, int recommendedY) {
-		setLocation(recommendedX + params.getMargin(), recommendedY + params.getMargin());
+		setLocation(
+				recommendedX + params.getMargin(),
+				recommendedY + params.getMargin());
 	}
 
 	@Override
@@ -67,7 +69,10 @@ public class View extends Role implements MotionEvent.MotionListener, I2D {
 				&& !collidedTo(event.getX(), event.getY()))
 			return false;
 
-		return event.getType().onMotion(event, this);
+		if (motionDispatcherListener != null)
+			motionDispatcherListener.dispatchMotionEvent(event);
+
+		return event.getType().toCacheIfConsumed(this, event);
 	}
 
 	private boolean collidedTo(int x, int y) {
@@ -163,6 +168,35 @@ public class View extends Role implements MotionEvent.MotionListener, I2D {
 		return "View(" + x + ", " + y + ", " + getWidth() + ", " + getHeight() + ")";
 	}
 
+	protected View findViewById(String resourceId) {
+		if (resourceId.equals(getId()))
+			return this;
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T extends View> T findView(String resourceId) {
+		return (T) findViewById(resourceId);
+	}
+
+	public String getId() {
+		return params.id;
+	}
+
+	public void forEach(Consumer<View> consumer) {
+		consumer.accept(this);
+	}
+
+	public List<View> flatList() {
+		List<View> result = new ArrayList<>();
+		forEach(result::add);
+		return result;
+	}
+
+	public void setMotionDispatchListener(MotionDispatcher motionDispatcher) {
+		this.motionDispatcherListener = motionDispatcher;
+	}
+
 	public static class Params {
 
 		private int widthSpec;
@@ -170,6 +204,8 @@ public class View extends Role implements MotionEvent.MotionListener, I2D {
 		private int heightSpec;
 
 		private int margin;
+
+		private String id;
 
 		Params(Map<String, String> attributes) {
 			heightSpec = -1;
@@ -204,5 +240,8 @@ public class View extends Role implements MotionEvent.MotionListener, I2D {
 			this.margin = parseInt(margin);
 		}
 
+		public void setId(String id) {
+			this.id = id;
+		}
 	}
 }

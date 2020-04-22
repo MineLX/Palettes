@@ -5,6 +5,7 @@ import com.zyh.pro.palettes.main.core.IPalette;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class ViewGroup extends View {
 
@@ -63,7 +64,12 @@ public class ViewGroup extends View {
 		if (super.dispatchMotionEvent(event))
 			return true;
 
-		return children.stream().anyMatch(child -> child.dispatchMotionEvent(event));
+		for (View child : getChildren()) {
+			if (child.dispatchMotionEvent(event))
+				return true;
+		}
+		return false;
+//		return children.stream().anyMatch(child -> child.dispatchMotionEvent(event));
 	}
 
 	@Override
@@ -81,8 +87,28 @@ public class ViewGroup extends View {
 		return false;
 	}
 
+	@Override
+	public void forEach(Consumer<View> consumer) {
+		super.forEach(consumer);
+		for (View child : children)
+			child.forEach(consumer);
+	}
+
+	@Override
+	public View findViewById(String resourceId) {
+		if (resourceId.equals(getId())) return this;
+
+		for (View child : children) {
+			View view = child.findViewById(resourceId);
+			if (view != null)
+				return view;
+		}
+		return null;
+	}
+
 	public static class ViewGroupMeasureSpec extends MeasureSpec {
-		protected ViewGroupMeasureSpec(MeasureParams measureParams) {
+
+		ViewGroupMeasureSpec(MeasureParams measureParams) {
 			super(measureParams);
 		}
 

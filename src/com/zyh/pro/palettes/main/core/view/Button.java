@@ -11,7 +11,8 @@ public class Button extends View {
 
 	public Button(Map<String, String> attributes) {
 		super(attributes);
-		clickListener = new ClickListener();
+
+		setMotionDispatchListener(clickListener = new ClickListener());
 	}
 
 	public void setOnClickListener(OnClickListener onClickListener) {
@@ -21,11 +22,5 @@ public class Button extends View {
 	@Override
 	protected void onViewDraw(IPalette palette) {
 		palette.clear(0x660077);
-	}
-
-	@Override
-	public boolean dispatchMotionEvent(MotionEvent event) {
-		clickListener.dispatchMotionEvent(event);
-		return super.dispatchMotionEvent(event);
 	}
 }

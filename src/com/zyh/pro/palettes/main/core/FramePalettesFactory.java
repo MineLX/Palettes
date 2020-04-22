@@ -5,9 +5,9 @@ import java.awt.*;
 
 public abstract class FramePalettesFactory implements IPalettesFactory {
 
-	private static final int WIDTH_INTERVAL = 16;
+	static final int WIDTH_INTERVAL = 8;
 
-	private static final int HEIGHT_INTERVAL = 37;
+	static final int HEIGHT_INTERVAL = 31;
 
 	private final JFrame frame;
 
