@@ -21,6 +21,7 @@ public class Button extends View {
 
 	@Override
 	protected void onViewDraw(IPalette palette) {
-		palette.clear(0x660077);
+		palette.clear(0x00ffff);
+		palette.drawText("HELLO", 0, 0, 50, 10, 0xff0000);
 	}
 }

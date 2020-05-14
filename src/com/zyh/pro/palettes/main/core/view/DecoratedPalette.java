@@ -56,6 +56,11 @@ public class DecoratedPalette implements IPalette {
 	}
 
 	@Override
+	public void drawText(String text, int x, int y, int width, int height, int value) {
+		decorated.drawText(text, x, y, width, height, value);
+	}
+
+	@Override
 	public int getWidth() {
 		return decorated.getWidth();
 	}

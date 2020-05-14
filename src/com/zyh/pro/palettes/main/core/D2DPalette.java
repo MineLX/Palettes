@@ -37,6 +37,9 @@ public class D2DPalette extends Palette {
 	private native void drawBitmap(int bitmapID);
 
 	@Override
+	public native void drawText(String text, int x, int y, int width, int height, int value);
+
+	@Override
 	public native void fillRect(int x, int y, int width, int height, int value);
 
 	@Override

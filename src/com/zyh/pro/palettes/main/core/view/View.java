@@ -43,13 +43,13 @@ public class View extends Role implements MotionEvent.MotionListener, I2D {
 		return new MeasureSpec(measureParams);
 	}
 
+	protected void onViewDraw(IPalette palette) {
+	}
+
 	@Override
 	protected final void onDraw(IPalette palette) {
 		offsetPalette.setDecorated(palette);
 		onViewDraw(offsetPalette);
-	}
-
-	protected void onViewDraw(IPalette palette) {
 	}
 
 	public final void measure(int remainderWidth, int remainderHeight) {

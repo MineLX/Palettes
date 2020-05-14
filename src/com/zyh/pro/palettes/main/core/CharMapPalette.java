@@ -36,6 +36,11 @@ public class CharMapPalette extends Palette {
 	}
 
 	@Override
+	public void drawText(String text, int x, int y, int width, int height, int value) {
+
+	}
+
+	@Override
 	public int getWidth() {
 		return map.getWidth();
 	}

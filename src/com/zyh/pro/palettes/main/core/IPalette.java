@@ -21,6 +21,8 @@ public interface IPalette {
 
 	void line(int startX, int startY, int endX, int endY, int value);
 
+	void drawText(String text, int x, int y, int width, int height, int value);
+
 	int getWidth();
 
 	int getHeight();

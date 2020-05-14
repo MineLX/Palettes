@@ -37,4 +37,9 @@ public class OffsetPalette extends DecoratedPalette {
 	public void line(int startX, int startY, int endX, int endY, int value) {
 		decorated.line(view.x + startX, view.y + startY, view.x + endX, view.y + endY, value);
 	}
+
+	@Override
+	public void drawText(String text, int x, int y, int width, int height, int value) {
+		decorated.drawText(text, view.x + x, view.y + y, width, height, value);
+	}
 }
